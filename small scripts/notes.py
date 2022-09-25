@@ -24,3 +24,6 @@ class Notes(IntEnum):
         if self._name_[-2:] == "sh":
             return f"{self._name_[0]+'#'}"
         return f"{self._name_}"
+
+    def __str__(self) -> str:
+        return self.__repr__()
