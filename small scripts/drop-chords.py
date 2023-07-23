@@ -4,7 +4,7 @@ import sys
 from modes import IONIAN
 from notes import Notes
 
-random.seed(420)
+# random.seed(420)
 
 DROP_MODE: int = 0
 MAX_FINGER_SPLIT_CONST = 2  # up or down
@@ -20,7 +20,7 @@ if len(sys.argv) > 1:
 
 
 startNote = Notes(random.randint(0, 11))
-print(startNote)
+print(f"Root note: {startNote}")
 
 
 def generate_chord(startNote: Notes, count=4, mode=IONIAN) -> list[Notes]:
@@ -41,7 +41,7 @@ def generate_chord(startNote: Notes, count=4, mode=IONIAN) -> list[Notes]:
 
 
 chord = generate_chord(startNote)
-# print(chord)
+print(f"Generated chord: {chord}")
 
 
 def find_finger_placement(chord: list[Notes]) -> list[(int, int, Notes)]:
@@ -67,7 +67,7 @@ def find_finger_placement(chord: list[Notes]) -> list[(int, int, Notes)]:
     for note in chord[1:]:
         base_fret_pos = returnlist[0][1]
         found = False
-        for (idx, tun) in enumerate(TUNING[2:]):
+        for idx, tun in enumerate(TUNING[2:]):
             tun_note = Notes[tun.upper()]
             fret = (note - tun_note) % 12
             frets = [fret, fret + 12]
@@ -90,4 +90,6 @@ def find_finger_placement(chord: list[Notes]) -> list[(int, int, Notes)]:
 
 
 fingers = find_finger_placement(chord)
-print(fingers)
+print("String, Fret, Note:")
+for finger in fingers:
+    print(finger)
