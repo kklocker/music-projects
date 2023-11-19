@@ -11,7 +11,7 @@ number_of_limbs = 4
 )
 
 primes_only = False
-
+CONSOLE_LENGTH = 50
 
 for name, value in options:
     if name in ("-p", "prime-only"):
@@ -26,6 +26,17 @@ if primes_only:
 else:
     interval_set = set(intervals)
 
+
+def print_limb(representation: str, value: int):
+    print(f"{representation}: {value:2d}  |", end="")
+    for x in range(CONSOLE_LENGTH):
+        if x % value == 0:
+            print(" x ", end="")
+        else:
+            print("   ", end="")
+    print()
+
+
 if __name__ == "__main__":
     limb_dict = {}
 
@@ -38,15 +49,18 @@ if __name__ == "__main__":
         limb_dict[limb] = interval_for_limb
 
     limb_dict = dict(sorted(limb_dict.items()))
-    CONSOLE_LENGTH = 50
     SPACE_CHAR = " . "
+    print("---" * (CONSOLE_LENGTH + 3))
     print()
-    print("--------|" + SPACE_CHAR * CONSOLE_LENGTH)
-    for k, v in limb_dict.items():
-        print(f"{k}: {v:2d}  |", end="")
-        for x in range(CONSOLE_LENGTH):
-            if x % v == 0:
-                print(" x ", end="")
-            else:
-                print("   ", end="")
-        print()
+    print("Limb    |" + SPACE_CHAR * CONSOLE_LENGTH)
+
+    if "RH" in limb_dict:
+        print_limb("RH", limb_dict["RH"])
+    if "LH" in limb_dict:
+        print_limb("LH", limb_dict["LH"])
+    if "RF" in limb_dict:
+        print_limb("RF", limb_dict["RF"])
+    if "LF" in limb_dict:
+        print_limb("LF", limb_dict["LF"])
+    print()
+    print("---" * (CONSOLE_LENGTH + 3))
