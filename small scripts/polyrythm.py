@@ -13,11 +13,11 @@ number_of_limbs = 4
 primes_only = False
 CONSOLE_LENGTH = 50
 
-for name, value in options:
+for name, arg_value in options:
     if name in ("-p", "prime-only"):
         primes_only = True
     if name in ("-l", "number-of-limbs"):
-        number_of_limbs = int(value)
+        number_of_limbs = int(arg_value)
         if number_of_limbs > 4:
             raise Exception("Invalid input")
 
@@ -39,8 +39,6 @@ def print_limb(representation: str, value: int):
 
 if __name__ == "__main__":
     limb_dict = {}
-
-    print(options)
     for limb_idx in range(number_of_limbs):
         limb = random.choice(sorted(limbs))
         limbs.remove(limb)
