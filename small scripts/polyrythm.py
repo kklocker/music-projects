@@ -35,15 +35,20 @@ else:
 
 
 def print_limb(representation: str, value):
-    if (value == custom_pattern):
+    if value == custom_pattern:
         print(bcolors.OKBLUE + f"{representation}: XX  |" + bcolors.ENDC, end="")
         n_repeat_times = CONSOLE_LENGTH // len(custom_pattern)
+        extra = CONSOLE_LENGTH % len(custom_pattern)
         pattern = custom_pattern.replace("-", " ")
-        pattern = str.join(" ", [f" {x}" for x in pattern])
-        print(bcolors.WARNING + pattern * n_repeat_times + bcolors.ENDC)
+        padded_pattern = str.join("", [f" {x} " for x in pattern])
+        extra_pattern = str.join("", [f" {x} " for x in pattern[:extra]])
+        string_to_print = padded_pattern * n_repeat_times + extra_pattern
+        print(bcolors.WARNING + string_to_print + bcolors.ENDC)
 
     else:
-        print(bcolors.OKBLUE +  f"{representation}: {value:2d}  |" + bcolors.OKBLUE, end="")
+        print(
+            bcolors.OKBLUE + f"{representation}: {value:2d}  |" + bcolors.OKBLUE, end=""
+        )
         for x in range(CONSOLE_LENGTH):
             if x % value == 0:
                 print(bcolors.OKGREEN + " x " + bcolors.ENDC, end="")
@@ -53,15 +58,15 @@ def print_limb(representation: str, value):
 
 
 class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 if __name__ == "__main__":
