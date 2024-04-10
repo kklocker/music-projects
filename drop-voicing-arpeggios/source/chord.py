@@ -1,4 +1,5 @@
 from source.arr import shift
+from source.colors import bcolors
 
 
 def getDrop2(chord: list[int]) -> list[int]:
@@ -21,7 +22,7 @@ def adjustOctaveForAscendingChord(chord: list[int], n_tones: int) -> list[int]:
     res = []
     for current in chord:
         while current < prev:
-            current += n_tones - 1
+            current += n_tones
 
         prev = current
         res.append(current)
@@ -36,8 +37,28 @@ def getFillerNote(
     lastNoteInFirstChord = firstChord[-1]
     firstNoteInSecondChord = secondChord[0]
     avg = (lastNoteInFirstChord + firstNoteInSecondChord) // 2
-    scale_note = avg % (n_tones - 1)
-    octave = avg // n_tones
-    closest_scale_tone = min(scale, key=lambda x: abs(x - scale_note))
-    adjusted_to_octave_scaletone = closest_scale_tone + (n_tones - 1) * octave
+    (note, octave) = get_note_and_octave(avg, n_tones)
+    closest_scale_tone = min(scale, key=lambda x: abs(x - note))
+    adjusted_to_octave_scaletone = closest_scale_tone + n_tones * octave
     return adjusted_to_octave_scaletone
+
+
+def get_octave(note: int, n_tones: int):
+    return note // n_tones
+
+
+def get_note_and_octave(note: int, n_tones: int) -> tuple[int, int]:
+    normalized_note = note % n_tones
+    octave = get_octave(note, n_tones)
+    return (normalized_note, octave)
+
+
+def print_colored_chord(chord, color: str):
+    for note in chord:
+        print(color, end="")
+        print(f"{note:02d}", end="")
+        print(bcolors.ENDC, end="   ")
+
+
+def print_filler_note(fillerNote):
+    print(f"{bcolors.WARNING}{fillerNote:2d}{bcolors.ENDC}", end="   ")
