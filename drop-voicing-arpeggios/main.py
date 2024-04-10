@@ -23,7 +23,7 @@ scale = [
     7,
     9,
     11,
-]  # Major scale Notes are 1-indexed to easier conform with interval names root = 1. For instance 1=C, 3 = D, 5 = E, 6 = F etc..
+]  # Major scale notes
 
 assert max(scale) < n_tones and min(scale) >= 0
 
@@ -35,9 +35,15 @@ scale_length = len(scale)
 # Generate chords from each note in the scale by stacking "thirds"
 chord_stacking_increment = 2  # thirds
 
-inversion = 0  # 0..3; Four different ways to play the chord
+inversion = 3  # 0..3; Four different ways to play the chord
 
 if __name__ == "__main__":
+    print(f"Root: {Notes(root).name}")
+    print(f"Scale notes (relative to root): {scale}")
+    print(f"Variant (inversion): {inversion}")
+
+    print_colored_and_reset("Exercise sequence: ", color=bcolors.HEADER)
+
     for idx, root_note in enumerate(scale):
         scale_chord_for_root = []
 
@@ -66,7 +72,6 @@ if __name__ == "__main__":
         secondFillerNote = getFillerNote(
             adjusted_drop_3, adjusted_scalechord[::-1], scale, n_tones
         )
-        print_colored_and_reset("Total sequence: ", color=bcolors.HEADER)
 
         print_colored_chord(adjusted_drop_2, bcolors.OKBLUE)
         print_filler_note(firstFillerNote)
