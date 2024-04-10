@@ -5,6 +5,7 @@ from source.chord import (
     getFillerNote,
     shiftForInversion,
 )
+from source.colors import bcolors, print_colored_and_reset
 
 
 n_tones = 12  #  Assuming western 12-tone notes
@@ -77,15 +78,22 @@ if __name__ == "__main__":
 
         # print(f"Second filler note: {secondFillerNote}")
 
-        print("Total sequence: ")
+        print_colored_and_reset("Total sequence: ", color=bcolors.HEADER)
 
-        print(
-            adjusted_drop_2,
-            firstFillerNote,
-            adjusted_drop_3,
-            secondFillerNote,
-            adjusted_scalechord[::-1],
-        )
+        def print_colored_chord(chord, color: str):
+            for note in chord:
+                print(color, end="")
+                print(f"{note:02d}", end="")
+                print(bcolors.ENDC, end="  ")
+
+        def print_filler_note(fillerNote):
+            print(f"{bcolors.WARNING}{fillerNote:2d}{bcolors.ENDC}", end="  ")
+
+        print_colored_chord(adjusted_drop_2, bcolors.OKBLUE)
+        print_filler_note(firstFillerNote)
+        print_colored_chord(adjusted_drop_3, bcolors.OKGREEN)
+        print_filler_note(secondFillerNote)
+        print_colored_chord(adjusted_scalechord[::-1], bcolors.OKCYAN)
 
         print()
         print()

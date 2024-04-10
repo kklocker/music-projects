@@ -32,9 +32,10 @@ def adjustOctaveForAscendingChord(chord: list[int], n_tones: int) -> list[int]:
 def getFillerNote(
     firstChord: list[int], secondChord: list[int], scale: list[int], n_tones: int
 ) -> int:
-    lastInFirst = firstChord[-1]
-    firstInLast = secondChord[0]
-    avg = (lastInFirst + firstInLast) // 2
+    """Gets the scale tone that lies closest to in the middle of the two adjecent"""
+    lastNoteInFirstChord = firstChord[-1]
+    firstNoteInSecondChord = secondChord[0]
+    avg = (lastNoteInFirstChord + firstNoteInSecondChord) // 2
     scale_note = avg % (n_tones - 1)
     octave = avg // n_tones
     closest_scale_tone = min(scale, key=lambda x: abs(x - scale_note))
