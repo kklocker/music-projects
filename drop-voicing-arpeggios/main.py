@@ -12,6 +12,7 @@ from source.colors import bcolors, print_colored_and_reset
 from source.notes import Notes
 
 from midiutil.MidiFile import MIDIFile
+import os
 
 n_tones = 12  #  Assuming western 12-tone notes
 
@@ -56,6 +57,9 @@ def write_midi(title: str, sequence: list[int]):
     for note in sequence:
         mf.addNote(track, channel, base_pitch + note, time, duration, volume)
         time += duration
+
+    # Ensure the output folder exists
+    os.makedirs("output", exist_ok=True)
 
     # write it to disk
     with open(f"output/{title}.mid", "wb") as outf:
